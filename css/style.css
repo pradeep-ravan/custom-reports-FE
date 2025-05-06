@@ -1,0 +1,65 @@
+body {
+    background-color: #f5f5f5;
+  }
+  
+  .navbar {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border: none;
+    margin-bottom: 30px;
+  }
+  
+  .card-header {
+    border-bottom: none;
+  }
+  
+  .metrics-container {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    background-color: #f9f9f9;
+  }
+  
+  .chart-container {
+    background-color: white;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    height: 300px;
+  }
+  
+  .table th {
+    font-weight: 600;
+    background-color: #f5f5f5;
+  }
+  
+  .action-btn {
+    margin-right: 5px;
+  }
+  
+  .action-btn:last-child {
+    margin-right: 0;
+  }
+  
+  #report-data-container {
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+  }
+  
+  .report-data-table {
+    width: 100%;
+  }
+  
+  .report-data-table th {
+    position: sticky;
+    top: 0;
+    background-color: #f5f5f5;
+    z-index: 1;
+  }
