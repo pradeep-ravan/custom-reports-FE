@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
   // Configure your API base URL here
-  const API_BASE_URL = 'https://custom-reports-fe.vercel.app';  
+  const API_BASE_URL = 'https://cutom-reports-be.vercel.app';  
   
   // DOM Elements
   const createReportSection = document.getElementById('create-report-section');
