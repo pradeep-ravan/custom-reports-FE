@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
+  // Configure your API base URL here
+  const API_BASE_URL = 'https://custom-reports-fe.vercel.app';  
+  
   // DOM Elements
   const createReportSection = document.getElementById('create-report-section');
   const viewReportsSection = document.getElementById('view-reports-section');
@@ -58,38 +61,6 @@ document.addEventListener('DOMContentLoaded', function() {
     section.classList.remove('d-none');
   }
   
-  // Load users for the dropdown
-  async function loadUsers() {
-    try {
-      const response = await fetch('/api/users');
-      const users = await response.json();
-      
-      const userSelect = document.getElementById('user-select');
-      
-      // Clear existing options except the first one
-      while (userSelect.options.length > 1) {
-        userSelect.remove(1);
-      }
-      
-      // Add user options
-      users.forEach(user => {
-        const option = document.createElement('option');
-        option.value = user._id; // Use MongoDB's _id
-        option.textContent = user.name;
-        userSelect.appendChild(option);
-      });
-    } catch (error) {
-      console.error('Error loading users:', error);
-      // Fallback to default options if API is not available
-      const userSelect = document.getElementById('user-select');
-      userSelect.innerHTML = `
-        <option value="">-- Select User --</option>
-        <option value="1">John Doe</option>
-        <option value="2">Jane Smith</option>
-      `;
-    }
-  }
-  
   // Form submission handler
   reportForm.addEventListener('submit', function(e) {
     e.preventDefault();
@@ -120,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Create a new report
   async function createReport(name, userId, metrics) {
     try {
-      const response = await fetch('/api/reports', {
+      const response = await fetch(`${API_BASE_URL}/api/reports`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -156,7 +127,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Load all reports
   async function loadReports() {
     try {
-      const response = await fetch('/api/reports');
+      const response = await fetch(`${API_BASE_URL}/api/reports`);
       const reports = await response.json();
       
       reportsTableBody.innerHTML = '';
@@ -206,7 +177,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Load report details
   async function loadReportDetails(reportId) {
     try {
-      const response = await fetch(`/api/reports/${reportId}`);
+      const response = await fetch(`${API_BASE_URL}/api/reports/${reportId}`);
       const report = await response.json();
       
       // Update UI with report details
@@ -236,7 +207,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Check if report data exists
   async function checkReportData(reportId) {
     try {
-      const response = await fetch(`/api/reports/${reportId}/data`);
+      const response = await fetch(`${API_BASE_URL}/api/reports/${reportId}/data`);
       
       if (response.ok) {
         const data = await response.json();
@@ -278,7 +249,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
       `;
       
-      const response = await fetch(`/api/reports/${reportId}/generate`, {
+      const response = await fetch(`${API_BASE_URL}/api/reports/${reportId}/generate`, {
         method: 'POST'
       });
       
@@ -286,7 +257,7 @@ document.addEventListener('DOMContentLoaded', function() {
       
       if (response.ok) {
         // Load the complete data
-        const dataResponse = await fetch(`/api/reports/${reportId}/data`);
+        const dataResponse = await fetch(`${API_BASE_URL}/api/reports/${reportId}/data`);
         const data = await dataResponse.json();
         
         displayReportData(data);
@@ -681,7 +652,7 @@ document.addEventListener('DOMContentLoaded', function() {
       sendEmailBtn.disabled = true;
       sendEmailBtn.innerHTML = '<i class="bi bi-hourglass-split"></i> Sending...';
       
-      const response = await fetch(`/api/reports/${reportId}/email`, {
+      const response = await fetch(`${API_BASE_URL}/api/reports/${reportId}/email`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -710,11 +681,8 @@ document.addEventListener('DOMContentLoaded', function() {
   // Download CSV
   downloadCsvBtn.addEventListener('click', function() {
     const reportId = this.getAttribute('data-id');
-    window.location.href = `/api/reports/download/${reportId}`;
+    window.location.href = `${API_BASE_URL}/api/reports/download/${reportId}`;
   });
-  
-  // Load users for dropdown when page loads
-  loadUsers();
   
   // Initial load
   loadReports();
